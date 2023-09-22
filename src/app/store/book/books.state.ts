@@ -5,7 +5,7 @@ import { BooksActions } from "./books.actions";
 
 
 export const initialBooksState: BookState ={
-  books:[],
+  books:{},
   isLoading: false,
 }
 
@@ -24,7 +24,7 @@ export const BooksReducer = createReducer<BookState>(
   }),
 
   on(BooksActions.createBookSuccess, (state, {book}) => {
-    return {...state, books: [...state.books, book], isLoading: false}
+    return {...state, books: {...state.books, [book.id]: book}, isLoading: false}
   }),
 
   on(BooksActions.updateBook, (state) => {
@@ -32,8 +32,7 @@ export const BooksReducer = createReducer<BookState>(
   }),
 
   on(BooksActions.updateBookSuccess, (state, {book}) => {
-    const newBooks = state.books.map(oldBook => oldBook.id === book.id ? book : oldBook)
-    return {...state, isLoading: false, books: newBooks }
+    return {...state, books: {...state.books, [book.id]: book}, isLoading: false}
   }),
 
   on(BooksActions.deleteBook, (state) => {
@@ -41,8 +40,9 @@ export const BooksReducer = createReducer<BookState>(
   }),
 
   on(BooksActions.deleteBookSuccess, (state, {book}) => {
-    const newBooks = state.books.filter(oldBook => oldBook.id !== book.id)
-    return {...state, isLoading: false, books: newBooks}
+
+    const {[book.id]: remove, ...otherBooks} = state.books
+    return {...state, isLoading: false, books: otherBooks}
   }),
 )
 

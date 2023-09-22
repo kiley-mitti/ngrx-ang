@@ -4,7 +4,7 @@ import {exhaustMap, map, switchMap} from 'rxjs/operators'
 
 import { BooksActions } from "./books.actions";
 import { BookService } from "src/app/services/book.service";
-import { Book } from "src/app/interfaces/book.interfaces";
+import { Book, BookEntity } from "src/app/interfaces/book.interfaces";
 
 const loadBooks = createEffect(
   (bookService = inject(BookService))=>
@@ -12,7 +12,7 @@ const loadBooks = createEffect(
       ofType(BooksActions.getBooks),
       exhaustMap(()=> {
         return bookService.getBooks().pipe(
-          map((books: Book[]) => BooksActions.getBooksSuccess({books}))
+          map((books: BookEntity) => BooksActions.getBooksSuccess({books}))
          )
         }
       )

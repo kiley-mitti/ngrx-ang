@@ -11,19 +11,17 @@
       <th>Name</th>
       <th>Action</th>
       <tbody>
-        <tr *ngFor="let book of data.books">
+        <tr *ngFor="let book of data.books | keyvalue">
+          <td>{{ book.value.id }}</td>
           <td>
-            {{ book.id }}
-          </td>
-          <td>
-            <ng-container *ngIf="bookUpdating !== book.id; else update">
-              {{ book.name }}
+            <ng-container *ngIf="bookUpdating !== book.value.id; else update">
+              {{ book.value.name }}
             </ng-container>
           </td>
           <td>
-            <button (click)="onDeleteBook(book)">Delete</button>
-            <button (click)="updateBook(book)">
-              {{ bookUpdating === book.id ? "Save" : "Update" }}
+            <button (click)="onDeleteBook(book.value)">Delete</button>
+            <button (click)="updateBook(book.value)">
+              {{ bookUpdating === book.value.id ? "Save" : "Update" }}
             </button>
           </td>
         </tr>

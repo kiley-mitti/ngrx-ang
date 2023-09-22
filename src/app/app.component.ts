@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { appFeature } from './store/book/books.state';
 import { BooksActions } from './store/book/books.actions';
 import { OnInit } from '@angular/core';
-import { Book } from './interfaces/book.interfaces';
+import { Book, BookEntity } from './interfaces/book.interfaces';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit{
   title = 'ngrx-ang';
-  books$: Observable<Book[]>
+  books$: Observable<BookEntity>
   isLoading$: Observable<boolean>
   bookUpdating?: number
   updatedBookName: string = ''
