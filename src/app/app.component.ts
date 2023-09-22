@@ -2,11 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { Store, State } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { appFeature } from './store/book/books.state';
 import { BooksActions } from './store/book/books.actions';
 import { OnInit } from '@angular/core';
-import { BookState } from './store/book/books.model';
 import { Book } from './interfaces/book.interfaces';
 import { Observable } from 'rxjs';
 
@@ -42,7 +41,7 @@ export class AppComponent implements OnInit{
     }))
   }
   updateBook(book: Book):void{
-    if(this.bookUpdating){
+    if(this.bookUpdating && this.bookUpdating === book.id){
       this.onUpdateBook({id: book.id, name: this.updatedBookName})
       this.bookUpdating = undefined
     } else {
